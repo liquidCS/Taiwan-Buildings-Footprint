@@ -11,7 +11,7 @@ from shapely.geometry import Point, Polygon
 
 ## Setting
 
-county_id = 'A'
+county_id = 'O'
 warnings.simplefilter("ignore")
 
 
@@ -61,14 +61,17 @@ MakeSureDirExist(county_shp_path)
 MakeSureDirExist(town_shp_path)
 MakeSureDirExist(village_shp_path)
 
-with zipfile.ZipFile('./shp/county_boundaries.zip', 'r') as zip_ref: # Extract all files in zip to path
-    zip_ref.extractall(county_shp_path)
+if not os.path.exists(f'{county_shp_path}/COUNTY_MOI_1140318.shp'):
+    with zipfile.ZipFile('./shp/county_boundaries.zip', 'r') as zip_ref: # Extract all files in zip to path
+        zip_ref.extractall(county_shp_path)
 
-with zipfile.ZipFile('./shp/town_boundaries.zip', 'r') as zip_ref:
-    zip_ref.extractall(town_shp_path)
+if not os.path.exists(f'{town_shp_path}/TOWN_MOI_1140318.shp'):
+    with zipfile.ZipFile('./shp/town_boundaries.zip', 'r') as zip_ref:
+        zip_ref.extractall(town_shp_path)
 
-with zipfile.ZipFile('./shp/village_boundaries.zip', 'r') as zip_ref: 
-    zip_ref.extractall(village_shp_path)
+if not os.path.exists(f'{village_shp_path}/VILLAGE_NLSC_1140620.shp'):
+    with zipfile.ZipFile('./shp/village_boundaries.zip', 'r') as zip_ref: 
+        zip_ref.extractall(village_shp_path)
 
 
 ## geoJson Data Processing
@@ -92,14 +95,18 @@ for file in os.listdir(village_shp_path):
         village_shapefile = os.path.join(village_shp_path, file)
         break
 
-county_shp_data = geopandas.read_file(county_shapefile) # Convert shp to geojson 
-county_shp_data.to_file(county_geoJson_path, driver='GeoJSON')  
 
-town_shp_data = geopandas.read_file(town_shapefile)
-town_shp_data.to_file(town_geoJson_path, driver='GeoJSON')
+if not os.path.exists(f'{geoJson_path}/county_boundaries.geojson'):
+    county_shp_data = geopandas.read_file(county_shapefile) # Convert shp to geojson 
+    county_shp_data.to_file(county_geoJson_path, driver='GeoJSON')  
 
-village_shp_data = geopandas.read_file(village_shapefile)
-village_shp_data.to_file(village_geoJson_path, driver='GeoJSON')
+if not os.path.exists(f'{geoJson_path}/town_boundaries.geojson'):
+    town_shp_data = geopandas.read_file(town_shapefile)
+    town_shp_data.to_file(town_geoJson_path, driver='GeoJSON')
+
+if not os.path.exists(f'{geoJson_path}/village_boundaries.geojson'):
+    village_shp_data = geopandas.read_file(village_shapefile)
+    village_shp_data.to_file(village_geoJson_path, driver='GeoJSON')
 
 
 ## Geojson Break Down 
@@ -177,10 +184,10 @@ for village_boundary in village_boundaries.iterfeatures():
 
 ## Start Plotting grtaph fucntion
 
-def GenImgBuildingPlot(draw_county_id):
+def GenImgBuildingPlot():
     print("Running Building Image...")
 
-    osm = pyrosm.OSM(f'./pbf/county/{draw_county_id}.pbf')
+    osm = pyrosm.OSM(f'./pbf/county/{county_id}.pbf')
 
     fig, ax = plt.subplots(1, 1, figsize=(100, 100))
     fig.set_facecolor('black')
@@ -223,12 +230,12 @@ def GenImgAddressAnalyse():
                     keep_relations=False
                     )
         
-        buildings_t = osm_v.get_buildings() # Aquire all buildings
+        buildings_v = osm_v.get_buildings() # Aquire all buildings
 
         if addresses_t is not None:
             for address in addresses_t.iterfeatures():
                 address_p = Point(address['geometry']['coordinates'][0], address['geometry']['coordinates'][1])
-                if buildings_t.contains(address_p).any(): # Detect whether address is inside a building
+                if buildings_v.contains(address_p).any(): # Detect whether address is inside a building
                     address_in_building.append(address_p)
                 else:
                     address_out_building.append(address_p) 
@@ -239,7 +246,7 @@ def GenImgAddressAnalyse():
     fig.set_facecolor('black')
     ax.set_axis_off()
 
-    village_boundaries.plot(ax=ax, facecolor='none', edgecolor='white', alpha=0.5, zorder=100) # Plot village boudaries on top
+    village_boundaries.plot(ax=ax, facecolor='none', edgecolor='black', alpha=0.5, zorder=100) # Plot village boudaries on top
 
     osm = pyrosm.OSM(f"./pbf/county/{county_id}.pbf")
     roads = osm.get_network(network_type="driving")
@@ -253,11 +260,71 @@ def GenImgAddressAnalyse():
     plt.savefig(f'{img_path}/{county_id}_addresses_plot.png')
 
 
+
+def GenImgAddressAnalyseWithBuilding():
+    print("Running Detail Address Analyses...")
+
+    address_filter = {'addr:housenumber': True}
+    
+    boundaries = geopandas.read_file(village_geoJson_path)
+    village_boundaries = boundaries[boundaries['COUNTYID'] == county_id]
+
+    fig, ax = plt.subplots(1, 1, figsize=(100, 100))
+    fig.set_facecolor('black')
+    ax.set_axis_off()
+
+    norm = plt.Normalize(0, 50)
+
+    for village_boundary in village_boundaries.iterfeatures():
+        village_id = village_boundary['properties']['VILLCODE']
+        print(village_boundary['properties']['VILLNAME'])
+
+        osm_v = pyrosm.OSM(f"./pbf/village/{village_id}.pbf")
+
+        addresses_t = osm_v.get_data_by_custom_criteria( # Aquire all address points 
+                    custom_filter=address_filter,
+                    keep_nodes=True,
+                    keep_ways=False,
+                    keep_relations=False
+                    )
+        
+        buildings_v = osm_v.get_buildings() # Aquire all buildings
+        buildings_v['count'] = 0 
+
+        if addresses_t is not None:
+            for address in addresses_t.iterfeatures():
+                address_p = Point(address['geometry']['coordinates'][0], address['geometry']['coordinates'][1])
+                index_in_building = buildings_v.index[buildings_v.contains(address_p)].tolist()
+                for index in index_in_building: # Detect whether address is inside a building
+                    buildings_v['count'][index] += 1
+                    break
+
+        colors = plt.cm.viridis(norm(buildings_v['count']))
+        buildings_v.plot(ax=ax, color=colors)
+        
+        for i in range(len(buildings_v)):
+            building_p = buildings_v['geometry'][i]
+            centroid = building_p.centroid
+            ax.annotate(str(buildings_v['count'][i]), xy=(centroid.x, centroid.y), color='white', fontsize=5, ha='center', zorder=200)
+
+        # geopandas.GeoSeries(address_in_building).plot(ax=ax, color='green', markersize=0.5) # Plot address within a building
+        # geopandas.GeoSeries(address_out_building).plot(ax=ax, color='red', markersize=0.5) # Plot address without a building
+
+
+    village_boundaries.plot(ax=ax, facecolor='none', edgecolor='white', alpha=0.5, zorder=100) # Plot village boudaries on top
+
+    osm = pyrosm.OSM(f"./pbf/county/{county_id}.pbf")
+    roads = osm.get_network(network_type="driving")
+    roads.plot(ax=ax, color='gray')
+
+    plt.savefig(f'{img_path}/{county_id}_detail_addr_plot.png')
+
+
 ## Run code plotting code
 
-# GenImgBuildingPlot(county_id)
-GenImgAddressAnalyse()
-
+# GenImgBuildingPlot()
+# GenImgAddressAnalyse()
+GenImgAddressAnalyseWithBuilding()
 
 
 
