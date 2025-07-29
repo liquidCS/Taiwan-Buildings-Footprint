@@ -11,7 +11,7 @@ from shapely.geometry import Point, Polygon
 
 ## Setting
 
-county_id = 'F'
+county_id = 'A'
 warnings.simplefilter("ignore")
 
 
