@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Jupyter Book
         run: |
-          jupyter-book build first-jupyter-book  # Build jupyter-book 
+          jupyter-book build taiwan-building-footprint # Build jupyter-book 
 
       - name: Upload built book
         uses: actions/upload-pages-artifact@v3
