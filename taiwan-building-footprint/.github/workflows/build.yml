@@ -21,7 +21,7 @@ jobs:
       - name: Install Jupyter Book
         run: |
           python -m pip install --upgrade pip
-          pip install -r first-jupyter-book/requirements.txt # Install required libraries from repo requirements.txt
+          pip install -r taiwan-building-footprint/requirements.txt # Install required libraries from repo requirements.txt
 
       - name: Build Jupyter Book
         run: |
