@@ -18,6 +18,15 @@ jobs:
         with:
           python-version: '3.13'  # Specify the Python version 
 
+      - name: Update package list
+        run: sudo apt update
+
+      - name: Install Photo Convertion Tool
+        run: sudo apt install imagemagick
+
+      - name: Convert .png to .webp
+        run: magick mogrify -format webp out/img/*.png
+
       - name: Install Jupyter Book
         run: |
           python -m pip install --upgrade pip
