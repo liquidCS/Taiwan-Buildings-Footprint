@@ -22,10 +22,10 @@ jobs:
         run: sudo apt update
 
       - name: Install Photo Convertion Tool
-        run: sudo apt install imagemagick
+        run: sudo apt-get install imagemagick
 
       - name: Convert .png to .webp
-        run: for f in out/img/*.png ; do magick "$f"  "${f%.*}.webp" ; done
+        run: for f in out/img/*.png ; do convert "$f"  "${f%.*}.webp" ; done
 
       - name: Install Jupyter Book
         run: |
