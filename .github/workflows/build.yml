@@ -25,7 +25,7 @@ jobs:
         run: sudo apt install imagemagick
 
       - name: Convert .png to .webp
-        run: magick mogrify -format webp out/img/*.png
+        run: for f in out/img/*.png ; do magick "$f"  "${f%.*}.webp" ; done
 
       - name: Install Jupyter Book
         run: |
