@@ -3,5 +3,10 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: footprint
+parts:
+- caption: Buildings & Addresses
+  chapters:
+    - file: footprint-northen
+    - file: footprint-central
+    - file: footprint-southern
+    - file: footprint-eastern
