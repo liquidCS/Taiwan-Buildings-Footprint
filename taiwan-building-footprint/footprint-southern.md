@@ -25,10 +25,10 @@ Building Plot
 Address Plot
 ![D_addresses_plot](../out/img/D_addresses_plot.webp)
 ![D_detail_addr_plot](../out/img/D_detail_addr_plot.webp)
-```
+:::
 
 ### 嘉義市
-:::{dropdown} {bdg-primary-line}`🏘️ - 4642 📍- 666` {bdg-success}`No Official Addresses`
+:::{dropdown} {bdg-primary-line}`🏘️ - 4642 📍- 666` {bdg-danger}`No Official Addresses`
 Building Plot
 ![I_buildings_plot](../out/img/I_buildings_plot.webp)
 Address Plot
@@ -37,7 +37,7 @@ Address Plot
 :::
 
 ### 嘉義縣
-:::{dropdown} {bdg-primary-line}`🏘️ - 13706 📍- 166524` {bdg-success}`No Official Addresses`
+:::{dropdown} {bdg-primary-line}`🏘️ - 13706 📍- 166524` {bdg-success}`Official Addresses`
 Building Plot
 ![Q_buildings_plot](../out/img/Q_buildings_plot.webp)
 Address Plot
@@ -46,10 +46,19 @@ Address Plot
 :::
 
 ### 屏東縣
-:::{dropdown} {bdg-primary-line}`🏘️ - 10753 📍- 288772` {bdg-success}`No Official Addresses`
+:::{dropdown} {bdg-primary-line}`🏘️ - 10753 📍- 288772` {bdg-success}`Official Addresses`
 Building Plot
 ![T_buildings_plot](../out/img/T_buildings_plot.webp)
 Address Plot
 ![T_addresses_plot](../out/img/T_Iddresses_plot.webp)
 ![T_detail_addr_plot](../out/img/T_detail_addr_plot.webp)
+:::
+
+### 澎湖縣 
+:::{dropdown} {bdg-primary-line}`🏘️ - 3095 📍- 36978` {bdg-success}`Official Addresses`
+Building Plot
+![T_buildings_plot](../out/img/X_buildings_plot.webp)
+Address Plot
+![T_addresses_plot](../out/img/X_Iddresses_plot.webp)
+![T_detail_addr_plot](../out/img/X_detail_addr_plot.webp)
 :::

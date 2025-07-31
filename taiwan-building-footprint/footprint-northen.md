@@ -63,7 +63,7 @@ Address Plot
 :::
 
 ### 宜蘭縣 
-:::{dropdown} {bdg-info-line}`🏘️ - 11339 📍- 785` {bdg-danger}`Official Addresses`   
+:::{dropdown} {bdg-info-line}`🏘️ - 11339 📍- 785` {bdg-danger}`No Official Addresses`   
 Building Plot
 ![G_buildings_plot](../out/img/G_buildings_plot.webp)
 Address Plot
