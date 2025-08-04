@@ -8,10 +8,11 @@ import json
 import pyrosm
 import matplotlib.pyplot as plt
 from shapely.geometry import Point, Polygon
+import multiprocessing
 
 ## Setting
 
-county_id = 'A'
+county_id = 'X' 
 warnings.simplefilter("ignore")
 
 
@@ -211,48 +212,79 @@ def GenImgBuildingPlot():
 
     plt.savefig(f'{img_path}/{county_id}_buildings_plot.png')
 
-def GenImgAddressAnalyse(saveCSV=False):
-    print("Running Address Analyses...")
+def _process_single_village(village_boundary_feature, addressRadius_flag):
+    village_id = village_boundary_feature['properties']['VILLCODE']
+    village_name = village_boundary_feature['properties']['VILLNAME']
+    print(f"{village_name} - {village_id}")
 
-    address_in_building = []
-    address_out_building = []
-    address_filter = {'addr:housenumber': True}
+    osm_v = pyrosm.OSM(f"./pbf/village/{village_id}.pbf")
+    
+    local_address_in_building = []
+    local_address_out_building = []
+
+    try:
+        addresses_t = osm_v.get_data_by_custom_criteria(
+                            custom_filter={'addr:housenumber': True},
+                            keep_nodes=True,
+                            keep_ways=False,
+                            keep_relations=False
+                            )
+        
+        buildings_v = osm_v.get_buildings().set_crs(epsg=4326)
+
+        if addresses_t is not None and buildings_v is not None:
+            for address in addresses_t.iterfeatures():
+                address_p = Point(address['geometry']['coordinates'][0], address['geometry']['coordinates'][1])
+                if addressRadius_flag:
+                    buildings_m = buildings_v.to_crs(3826)
+                    address_m = geopandas.GeoSeries([address_p], crs=buildings_v.crs).to_crs(3826)
+                    buffer = address_m.buffer(2).iloc[0]
+                    if buildings_m.intersects(buffer).any():
+                        local_address_in_building.append(address_p)
+                    else:
+                        local_address_out_building.append(address_p)
+                else:
+                    if buildings_v.intersects(address_p).any():
+                        local_address_in_building.append(address_p)
+                    else:
+                        local_address_out_building.append(address_p)
+    except Exception as e:
+        print(f"Error processing {village_name} ({village_id}): {e}")
+    
+    return local_address_in_building, local_address_out_building
+
+def GenImgAddressAnalyse(saveCSV=False, showBuildingFootprint=False, addressRadius=False):
+    print("Running Address Analyses...")
+    
+    if showBuildingFootprint:
+        fig, ax = plt.subplots(1, 1, figsize=(160, 160))
+    else:
+        fig, ax = plt.subplots(1, 1, figsize=(100, 100))
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0) # make margin smaller
+    fig.set_facecolor('black')
+    ax.set_axis_off()
+
     
     boundaries = geopandas.read_file(village_geoJson_path)
     village_boundaries = boundaries[boundaries['COUNTYID'] == county_id]
 
-    for village_boundary in village_boundaries.iterfeatures():
-        village_id = village_boundary['properties']['VILLCODE']
-        print(village_boundary['properties']['VILLNAME'], ' - ', village_id)
+    address_in_building = []
+    address_out_building = []
 
-        osm_v = pyrosm.OSM(f"./pbf/village/{village_id}.pbf")
+    # Use multiprocessing to speed up the loop
+    with multiprocessing.Pool(processes=os.cpu_count()) as pool:
+        results = pool.starmap(_process_single_village, [(v, addressRadius) for v in village_boundaries.iterfeatures()])
 
-        try: # may cause error when grabbing data from small island don't know why 
-
-            addresses_t = osm_v.get_data_by_custom_criteria( # Aquire all address points 
-                        custom_filter=address_filter,
-                        keep_nodes=True,
-                        keep_ways=False,
-                        keep_relations=False
-                        )
-            
-            buildings_v = osm_v.get_buildings() # Aquire all buildings
-
-            if addresses_t is not None and buildings_v is not None:
-                for address in addresses_t.iterfeatures():
-                    address_p = Point(address['geometry']['coordinates'][0], address['geometry']['coordinates'][1])
-                    if buildings_v.contains(address_p).any(): # Detect whether address is inside a building
-                        address_in_building.append(address_p)
-                    else:
-                        address_out_building.append(address_p) 
-        except Exception as e:
-            print(e)
+    for in_b, out_b in results:
+        address_in_building.extend(in_b)
+        address_out_building.extend(out_b)
 
     # plot graph
+    osm_c = pyrosm.OSM(f"./pbf/county/{county_id}.pbf")
+    buildings_c = osm_c.get_buildings() 
 
-    fig, ax = plt.subplots(1, 1, figsize=(100, 100))
-    fig.set_facecolor('black')
-    ax.set_axis_off()
+    if showBuildingFootprint: # Plot building footprint
+        buildings_c.plot(ax=ax, facecolor='none', edgecolor='gold', linewidth=0.5)
 
     # village_boundaries.plot(ax=ax, facecolor='none', edgecolor='black', alpha=0.5, zorder=100) # Plot village boudaries on top
     boundary = geopandas.read_file(f'{geoJson_path}/county/{county_id}.geojson')
@@ -267,7 +299,10 @@ def GenImgAddressAnalyse(saveCSV=False):
 
     print(len(address_in_building), ' + ', len(address_out_building), ' = ', len(address_in_building)+len(address_out_building))
 
-    plt.savefig(f'{img_path}/{county_id}_addresses_plot.png')
+    if showBuildingFootprint:
+        plt.savefig(f'{img_path}/{county_id}_addresses&building_plot.png')
+    else:
+        plt.savefig(f'{img_path}/{county_id}_addresses_plot.png')
 
     if saveCSV:
         csv_handler({
@@ -348,8 +383,6 @@ def GenImgAddressAnalyseWithBuilding(saveCSV=False):
 
             # ax.text(s=str(buildings_v['count'][i]), x=centroid.x, y=centroid.y, color='gray', fontsize=5, ha='center', zorder=200)
 
-        # geopandas.GeoSeries(address_in_building).plot(ax=ax, color='green', markersize=0.5) # Plot address within a building
-        # geopandas.GeoSeries(address_out_building).plot(ax=ax, color='red', markersize=0.5) # Plot address without a building
 
 
     # village_boundaries.plot(ax=ax, facecolor='none', edgecolor='white', alpha=0.5, zorder=100) # Plot village boudaries on top
@@ -385,19 +418,6 @@ def GenImgAddressAnalyseWithBuilding(saveCSV=False):
 
 ## Run code plotting code
 
-GenImgBuildingPlot()
-GenImgAddressAnalyse(saveCSV=True)
-GenImgAddressAnalyseWithBuilding(saveCSV=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
+# GenImgBuildingPlot()
+GenImgAddressAnalyse(saveCSV=False, showBuildingFootprint=True, addressRadius=True)
+# GenImgAddressAnalyseWithBuilding(saveCSV=True)
