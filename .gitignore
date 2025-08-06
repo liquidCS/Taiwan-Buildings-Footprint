@@ -3,4 +3,7 @@ shp/
 pbf/
 geojsons/
 
+tiles/data/
+
+
 taiwan-building-footprint/_build/
