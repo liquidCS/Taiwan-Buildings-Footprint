@@ -2,25 +2,34 @@
 
 ![logo image](taiwan-building-footprint/logo.webp)
 
+#### CONTENTS 
+This project is seperated into 3 parts
+- [OSM Address and Building Analysis](#osm-address-and-building-analysis) 
+- [Tiles Generation](#tiles-generation)
+- [Building Segmentaiton](#building-segmentation)
+
 ## OSM Address and Building Analysis 
 
-#### FILES:
+#### FILES
 - Code - `building_visualize.py`
 - Jupyter Book - `taiwna-building-footprint/`
 
-#### RESULT: 
-- [analysis/visualize on Jupyter book](https://liquidcs.github.io/Taiwan-Buildings-Footprint/intro.html)
+#### RESULT
+- [Analysis/visualize on Jupyter book](https://liquidcs.github.io/Taiwan-Buildings-Footprint/intro.html)
 - [Raw Data without Visualization](https://github.com/liquidCS/Taiwan-Buildings-Footprint/blob/main/out/data/analysis_building%26addr.csv)
 
 #### DEPENDENCY 
-- Osmium
+- [Osmium](https://osmcode.org/osmium-tool/index.html)
     - [Installation Guide](https://osmcode.org/osmium-tool/manual.html#installation)
 - Python Library 
-    - pandas, geopandas, pyrosm
+    - [pandas](https://pypi.org/project/pandas/), [geopandas](https://pypi.org/project/geopandas/), [pyrosm](https://pypi.org/project/pyrosm/)
+    - [matplotlib](https://pypi.org/project/matplotlib/)
     - zipfile
-    - matplotlib
 
 #### RUN
+> [!NOTE]
+> On first execution, approximately 300 MB of OSM data will be downloaded.
+
 ```
 pip install -r requirements.txt
 python building_visualize.py [county_id] 
@@ -29,8 +38,6 @@ python building_visualize.py [county_id]
 #### OPTIONS
 ```
 usage: building_visualize.py [-h] [--buildingWithRoad] [--addressAnalysis] [--radius] [--showFootprint] [--detailAddressAnalysis] [--saveCSV] county_id
-
-Generate graphs using OSM data.
 
 positional arguments:
   county_id             The county ID you want to generate.
@@ -45,13 +52,13 @@ options:
                         Generate image of building with different colors representing how many address a building has.
   --saveCSV             Store analysis result to out/data/analysis_building&addr.csv
 ```
-
-
+> [!IMPORTANT]
+> Options like --addressAnalysis with --radius and --detailAddressAnalysis can take up 15 minutes to run.
 
 
 ## Tiles Generation
 
-Files:
+#### FILES 
 - under `tiles/`
 
 
