@@ -15,9 +15,13 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Generate graphs using OSM data.")
 parser.add_argument("county_id", type=str, help="The county ID you want to generate.")
-parser.add_argument("--building&road", action='store_true', help='Generate image with buildings and roads')
+parser.add_argument("--buildingWithRoad",  action='store_true', help='Generate image with buildings and roads')
 parser.add_argument("--addressAnalysis", action='store_true', help='Generate image of address where green means address loacation is in building and red is outside the building.')
-parser.add_argument("--detailAddressAnalysis", action='store_true', help='Generate image of address where green means address loacation is in building and red is outside the building.')
+parser.add_argument("--radius", action='store_true', help='Analysis address with a margin of 2m of error when consider whether it is in a building.')
+parser.add_argument("--showFootprint", action='store_true', help='Show building outline when generating address analysis.')
+parser.add_argument("--detailAddressAnalysis", action='store_true', help='Generate image of building with different colors representing how many address a building has.')
+parser.add_argument("--saveCSV", action='store_true', help='Store analysis result to out/data/analysis_building&addr.csv')
+
 args = parser.parse_args()
 
 
@@ -324,8 +328,8 @@ def GenImgAddressAnalyse(saveCSV=False, showBuildingFootprint=False, addressRadi
     elif saveCSV and addressRadius:
         csv_handler({
             'county_id':[county_id],
-            'address_distance_with_building(<=3m)': [len(address_in_building)],
-            'address_distance_with_building(>3m)': [len(address_out_building)]
+            'address_distance_with_building(<=2m)': [len(address_in_building)],
+            'address_distance_with_building(>2m)': [len(address_out_building)]
         })
 
 
@@ -435,6 +439,9 @@ def GenImgAddressAnalyseWithBuilding(saveCSV=False):
 
 ## Run code plotting code
 
-# GenImgBuildingPlot()
-GenImgAddressAnalyse(saveCSV=True, showBuildingFootprint=True, addressRadius=True)
-# GenImgAddressAnalyseWithBuilding(saveCSV=True)
+if args.buildingWithRoad:
+    GenImgBuildingPlot()
+if args.addressAnalysis:
+    GenImgAddressAnalyse(saveCSV=args.saveCSV, showBuildingFootprint=args.showFootprint, addressRadius=args.radius)
+if args.detailAddressAnalysis:
+    GenImgAddressAnalyseWithBuilding(saveCSV=args.saveCSV)

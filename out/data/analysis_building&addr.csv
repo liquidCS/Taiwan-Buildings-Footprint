@@ -1,4 +1,4 @@
-county_id,building_count,address_count,0,1,2~5,6~10,11~20,21~50,>50,addr_in_building,addr_out_building,address_distance_with_building(<=3m),address_distance_with_building(>3m)
+county_id,building_count,address_count,0,1,2~5,6~10,11~20,21~50,>50,addr_in_building,addr_out_building,address_distance_with_building(<=2m),address_distance_with_building(>2m)
 A,76650.0,1119294.0,29332.0,8199.0,12901.0,12797.0,7085.0,4354.0,1982.0,592807.0,526487.0,720432.0,398862.0
 B,54951.0,1189956.0,21645.0,21509.0,5507.0,1589.0,1223.0,1717.0,1761.0,315693.0,874263.0,347508.0,842448.0
 C,4410.0,187423.0,1691.0,432.0,392.0,672.0,504.0,468.0,251.0,54843.0,132580.0,61601.0,125822.0
