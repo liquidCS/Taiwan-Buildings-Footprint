@@ -13,15 +13,18 @@ By <a href="//commons.wikimedia.org/wiki/User:Luuva" class="mw-redirect" title="
 Building Plot
 ![B_buildings_plot](../out/img/B_buildings_plot.webp)
 Address Plot
-![B_addresses_plot](../out/img/B_addresses_plot.webp)
+![B_addresses_plot](../out/img/B_addresses&building_plot.webp)
+Detail Address Plot
 ![B_detail_addr_plot](../out/img/B_detail_addr_plot.webp)
-```
+:::
+
 ### 苗栗縣 
 :::{dropdown} {bdg-info-line}`🏘️ - 8683 📍- 209633` {bdg-success}`Official Addresses`   
 Building Plot
 ![K_buildings_plot](../out/img/K_buildings_plot.webp)
 Address Plot
-![K_addresses_plot](../out/img/K_addresses_plot.webp)
+![K_addresses_plot](../out/img/K_addresses&building_plot.webp)
+Detail Address Plot
 ![K_detail_addr_plot](../out/img/K_detail_addr_plot.webp)
 :::
 
@@ -30,7 +33,8 @@ Address Plot
 Building Plot
 ![N_buildings_plot](../out/img/N_buildings_plot.webp)
 Address Plot
-![N_addresses_plot](../out/img/N_addresses_plot.webp)
+![N_addresses_plot](../out/img/N_addresses&building_plot.webp)
+Detail Address Plot
 ![N_detail_addr_plot](../out/img/N_detail_addr_plot.webp)
 :::
 
@@ -39,7 +43,8 @@ Address Plot
 Building Plot
 ![P_buildings_plot](../out/img/P_buildings_plot.webp)
 Address Plot
-![P_addresses_plot](../out/img/P_addresses_plot.webp)
+![P_addresses_plot](../out/img/P_addresses&building_plot.webp)
+Detail Address Plot
 ![P_detail_addr_plot](../out/img/P_detail_addr_plot.webp)
 :::
 
@@ -48,6 +53,7 @@ Address Plot
 Building Plot
 ![M_buildings_plot](../out/img/M_buildings_plot.webp)
 Address Plot
-![M_addresses_plot](../out/img/M_addresses_plot.webp)
+![M_addresses_plot](../out/img/M_addresses&building_plot.webp)
+Detail Address Plot
 ![M_detail_addr_plot](../out/img/M_detail_addr_plot.webp)
 :::

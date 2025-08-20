@@ -14,7 +14,8 @@ By <a href="//commons.wikimedia.org/wiki/User:Luuva" class="mw-redirect" title="
 Building Plot
 ![E_buildings_plot](../out/img/E_buildings_plot.webp)
 Address Plot
-![E_addresses_plot](../out/img/E_addresses_plot.webp)
+![E_addresses_plot](../out/img/E_addresses_building_plot.webp)
+Detail Address Plot
 ![E_detail_addr_plot](../out/img/E_detail_addr_plot.webp)
 :::
 
@@ -23,7 +24,8 @@ Address Plot
 Building Plot
 ![D_buildings_plot](../out/img/D_buildings_plot.webp)
 Address Plot
-![D_addresses_plot](../out/img/D_addresses_plot.webp)
+![D_addresses_plot](../out/img/D_addresses&building_plot.webp)
+Detail Address Plot
 ![D_detail_addr_plot](../out/img/D_detail_addr_plot.webp)
 :::
 
@@ -32,7 +34,8 @@ Address Plot
 Building Plot
 ![I_buildings_plot](../out/img/I_buildings_plot.webp)
 Address Plot
-![I_addresses_plot](../out/img/I_addresses_plot.webp)
+![I_addresses_plot](../out/img/I_addresses&building_plot.webp)
+Detail Address Plot
 ![I_detail_addr_plot](../out/img/I_detail_addr_plot.webp)
 :::
 
@@ -41,7 +44,8 @@ Address Plot
 Building Plot
 ![Q_buildings_plot](../out/img/Q_buildings_plot.webp)
 Address Plot
-![Q_addresses_plot](../out/img/Q_addresses_plot.webp)
+![Q_addresses_plot](../out/img/Q_addresses&building_plot.webp)
+Detail Address Plot
 ![Q_detail_addr_plot](../out/img/Q_detail_addr_plot.webp)
 :::
 
@@ -50,7 +54,8 @@ Address Plot
 Building Plot
 ![T_buildings_plot](../out/img/T_buildings_plot.webp)
 Address Plot
-![T_addresses_plot](../out/img/T_Iddresses_plot.webp)
+![T_addresses_plot](../out/img/T_Iddresses&building_plot.webp)
+Detail Address Plot
 ![T_detail_addr_plot](../out/img/T_detail_addr_plot.webp)
 :::
 
@@ -59,6 +64,7 @@ Address Plot
 Building Plot
 ![T_buildings_plot](../out/img/X_buildings_plot.webp)
 Address Plot
-![T_addresses_plot](../out/img/X_Iddresses_plot.webp)
+![T_addresses_plot](../out/img/X_Iddresses&building_plot.webp)
+Detail Address Plot
 ![T_detail_addr_plot](../out/img/X_detail_addr_plot.webp)
 :::

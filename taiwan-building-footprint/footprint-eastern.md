@@ -15,7 +15,8 @@ By <a href="//commons.wikimedia.org/wiki/User:Luuva" class="mw-redirect" title="
 Building Plot
 ![U_buildings_plot](../out/img/U_buildings_plot.webp)
 Address Plot
-![U_addresses_plot](../out/img/U_addresses_plot.webp)
+![U_addresses_plot](../out/img/U_addresses&building_plot.webp)
+Detail Address Plot
 ![U_detail_addr_plot](../out/img/U_detail_addr_plot.webp)
 :::
 
@@ -24,6 +25,7 @@ Address Plot
 Building Plot
 ![V_buildings_plot](../out/img/V_buildings_plot.webp)
 Address Plot
-![V_addresses_plot](../out/img/V_addresses_plot.webp)
+![V_addresses_plot](../out/img/V_addresses&building_plot.webp)
+Detail Address Plot
 ![V_detail_addr_plot](../out/img/V_detail_addr_plot.webp)
 :::

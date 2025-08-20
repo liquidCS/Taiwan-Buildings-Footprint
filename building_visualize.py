@@ -1,5 +1,6 @@
 import subprocess 
 import os
+import sys
 import warnings
 import zipfile
 import geopandas 
@@ -9,10 +10,19 @@ import pyrosm
 import matplotlib.pyplot as plt
 from shapely.geometry import Point, Polygon
 import multiprocessing
+import argparse
+
+
+parser = argparse.ArgumentParser(description="Generate graphs using OSM data.")
+parser.add_argument("county_id", type=str, help="The county ID you want to generate.")
+parser.add_argument("--building&road", action='store_true', help='Generate image with buildings and roads')
+parser.add_argument("--addressAnalysis", action='store_true', help='Generate image of address where green means address loacation is in building and red is outside the building.')
+parser.add_argument("--detailAddressAnalysis", action='store_true', help='Generate image of address where green means address loacation is in building and red is outside the building.')
+args = parser.parse_args()
+
 
 ## Setting
-
-county_id = 'X' 
+county_id = args.county_id
 warnings.simplefilter("ignore")
 
 
@@ -304,11 +314,18 @@ def GenImgAddressAnalyse(saveCSV=False, showBuildingFootprint=False, addressRadi
     else:
         plt.savefig(f'{img_path}/{county_id}_addresses_plot.png')
 
-    if saveCSV:
+    if saveCSV and not addressRadius:
         csv_handler({
             'county_id': [county_id],
             'addr_in_building': [len(address_in_building)],
             'addr_out_building': [len(address_out_building)]
+        })
+
+    elif saveCSV and addressRadius:
+        csv_handler({
+            'county_id':[county_id],
+            'address_distance_with_building(<=3m)': [len(address_in_building)],
+            'address_distance_with_building(>3m)': [len(address_out_building)]
         })
 
 
@@ -404,8 +421,8 @@ def GenImgAddressAnalyseWithBuilding(saveCSV=False):
             '1': [addr_detail_count[1]],
             '2~5': [addr_detail_count[2]],
             '6~10': [addr_detail_count[3]],
-            '10~20': [addr_detail_count[4]],
-            '20~50': [addr_detail_count[5]],
+            '11~20': [addr_detail_count[4]],
+            '21~50': [addr_detail_count[5]],
             '>50': [addr_detail_count[6]]
         })
 
@@ -419,5 +436,5 @@ def GenImgAddressAnalyseWithBuilding(saveCSV=False):
 ## Run code plotting code
 
 # GenImgBuildingPlot()
-GenImgAddressAnalyse(saveCSV=False, showBuildingFootprint=True, addressRadius=True)
+GenImgAddressAnalyse(saveCSV=True, showBuildingFootprint=True, addressRadius=True)
 # GenImgAddressAnalyseWithBuilding(saveCSV=True)
