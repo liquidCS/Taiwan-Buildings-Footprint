@@ -30,6 +30,7 @@
 > On first execution, approximately 300 MB of OSM data will be downloaded.
 
 ```
+sudo apt install osmium-tool
 pip install -r requirements.txt
 python building_visualize.py [county_id] 
 ```

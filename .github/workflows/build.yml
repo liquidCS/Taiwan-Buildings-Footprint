@@ -22,7 +22,10 @@ jobs:
         run: sudo apt update
 
       - name: Install Photo Convertion Tool
-        run: sudo apt-get install imagemagick
+        run: sudo apt-get install imagemagick pngcrush
+
+      - name: Compress .png images
+        run: for f in out/img/*.png ; do pngcrush -ow "$f"; done
 
       - name: Convert .png to .webp
         run: for f in out/img/*.png ; do convert "$f"  "${f%.*}.webp" ; done
