@@ -3,7 +3,6 @@
 ![logo image](taiwan-building-footprint/logo.webp)
 
 #### CONTENTS 
-This project is seperated into 3 parts
 - [OSM Address and Building Analysis](#osm-address-and-building-analysis) 
 - [Tiles Generation](#tiles-generation)
 - [Building Segmentaiton](#building-segmentation)
@@ -36,6 +35,8 @@ python building_visualize.py [county_id]
 ```
 
 #### OPTIONS
+> [!IMPORTANT]
+> Options like --addressAnalysis with --radius and --detailAddressAnalysis can take up 15 minutes to run.
 ```
 usage: building_visualize.py [-h] [--buildingWithRoad] [--addressAnalysis] [--radius] [--showFootprint] [--detailAddressAnalysis] [--saveCSV] county_id
 
@@ -52,8 +53,6 @@ options:
                         Generate image of building with different colors representing how many address a building has.
   --saveCSV             Store analysis result to out/data/analysis_building&addr.csv
 ```
-> [!IMPORTANT]
-> Options like --addressAnalysis with --radius and --detailAddressAnalysis can take up 15 minutes to run.
 
 
 ## Tiles Generation
