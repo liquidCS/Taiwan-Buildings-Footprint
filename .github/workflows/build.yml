@@ -25,7 +25,7 @@ jobs:
         run: sudo apt-get install imagemagick pngcrush
 
       - name: Resize large .png images
-        run: for f in out/img/*.png ; do [[ "$f" == *"&"* ]] && magick "$f" -resize 15000x15000 "${f%.*}.png" ; done
+        run: for f in out/img/*.png ; do [[ "$f" == *"&"* ]] && convert "$f" -resize 15000x15000 "${f%.*}.png" ; done
 
       - name: Compress .png images
         run: for f in out/img/*.png ; do pngcrush -ow "$f"; done
