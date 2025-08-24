@@ -3,15 +3,24 @@ import pyrosm
 import math
 from shapely.geometry import  Polygon, box
 import sys 
+import argparse
 import contextily as cx 
 import geopandas
-import folium
 
 
-x, y, z = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+parser = argparse.ArgumentParser(description="Generate binary map using OSM buildings data.")
+parser.add_argument("x", type=int, help='x - WMP horizontal tile index')
+parser.add_argument("y", type=int, help='y - WMP vertical tile index')
+parser.add_argument("z", type=int, help='z - WMP zoom level')
+args = parser.parse_args()
 
+x = args.x
+y = args.y
+z = args.z
 
-
+def ensure_path_exists(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 def tile2bbox(x, y, z):
@@ -34,9 +43,7 @@ def bbox2polygon(min_lon, min_lat, max_lon, max_lat):
     ]
 
 
-
-osm = pyrosm.OSM("../Taiwan-Buildings-Footprint/pbf/county/A.pbf")
-
+osm = pyrosm.OSM("../pbf/taiwan.osm.pbf")
 
 # Calculate the bbox of a single tile
 min_lon, min_lat, max_lon, max_lat = tile2bbox(x, y, z)
@@ -76,5 +83,6 @@ ax.set_ylim(miny, maxy)
 cx.add_basemap(ax, attribution_size=0, source="https://wmts.nlsc.gov.tw/wmts/PHOTO2/default/EPSG:3857/{z}/{y}/{x}", zoom=z) # Add basemap
 
 fig.subplots_adjust(left=0, right=1, top=1, bottom=0) # make margin smaller
+ensure_path_exists('data/train_images')
 plt.savefig(f"data/train_images/{x}-{y}-{z}.png")
 

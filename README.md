@@ -11,7 +11,7 @@
 
 #### FILES
 - Code - `building_visualize.py`
-- Jupyter Book - `taiwna-building-footprint/`
+- Jupyter Book - `taiwan-building-footprint/`
 
 #### RESULT
 - [Analysis/visualize on Jupyter book](https://liquidcs.github.io/Taiwan-Buildings-Footprint/intro.html)
@@ -59,7 +59,30 @@ options:
 ## Tiles Generation
 
 #### FILES 
-- under `tiles/`
+- Code - `tiles/data.py`
+- Output - `tiles/data/train_images`, `tiles/data/train_masks` 
+
+#### DEPENDENCY 
+- 
+
+#### RUN
+```
+cd tiles/
+pip install -r requirements.txt
+python data.py [x] [y] [z]
+```
+
+### OPTIONS
+```
+usage: data.py [-h] x y z
+
+Generate binary map using OSM buildings data.
+
+positional arguments:
+  x           x - WMP horizontal tile index
+  y           y - WMP vertical tile index
+  z           z - WMP zoom level
+```
 
 
 
