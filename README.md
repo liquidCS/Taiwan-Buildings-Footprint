@@ -63,7 +63,8 @@ options:
 - Output - `tiles/data/train_images`, `tiles/data/train_masks` 
 
 #### DEPENDENCY 
-- 
+- [pyrosm](https://pypi.org/project/pyrosm/), [geopandas](https://pypi.org/project/pandas/)
+- [matplotlib](https://pypi.org/project/matplotlib/), [contextily](https://contextily.readthedocs.io/en/latest/intro_guide.html)
 
 #### RUN
 ```
@@ -83,8 +84,6 @@ positional arguments:
   y           y - WMP vertical tile index
   z           z - WMP zoom level
 ```
-
-
 
 ## Building Segmentation
 
