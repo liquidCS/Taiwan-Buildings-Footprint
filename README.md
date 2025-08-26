@@ -17,6 +17,8 @@
 - [Analysis/visualize on Jupyter book](https://liquidcs.github.io/Taiwan-Buildings-Footprint/intro.html)
 - [Raw Data without Visualization](https://github.com/liquidCS/Taiwan-Buildings-Footprint/blob/main/out/data/analysis_building%26addr.csv)
 
+![Examples](out/img/img_examples.png)
+
 #### DEPENDENCY 
 - [Osmium](https://osmcode.org/osmium-tool/index.html)
     - [Installation Guide](https://osmcode.org/osmium-tool/manual.html#installation)
@@ -61,6 +63,9 @@ options:
 #### FILES 
 - Code - `tiles/data.py`
 - Output - `tiles/data/train_images`, `tiles/data/train_masks` 
+
+#### RESULT
+![Tiles Example](tiles/tiles_examples.png)
 
 #### DEPENDENCY 
 - [pyrosm](https://pypi.org/project/pyrosm/), [geopandas](https://pypi.org/project/pandas/)

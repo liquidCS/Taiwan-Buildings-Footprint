@@ -3,6 +3,7 @@ import pyrosm
 import math
 from shapely.geometry import  Polygon, box
 import sys 
+import os 
 import argparse
 import contextily as cx 
 import geopandas
@@ -12,6 +13,7 @@ parser = argparse.ArgumentParser(description="Generate binary map using OSM buil
 parser.add_argument("x", type=int, help='x - WMP horizontal tile index')
 parser.add_argument("y", type=int, help='y - WMP vertical tile index')
 parser.add_argument("z", type=int, help='z - WMP zoom level')
+parser.add_argument("county_id", type=str, help='ID of the county')
 args = parser.parse_args()
 
 x = args.x
@@ -43,7 +45,7 @@ def bbox2polygon(min_lon, min_lat, max_lon, max_lat):
     ]
 
 
-osm = pyrosm.OSM("../pbf/taiwan.osm.pbf")
+osm = pyrosm.OSM(f"../pbf/county/{args.county_id}.pbf")
 
 # Calculate the bbox of a single tile
 min_lon, min_lat, max_lon, max_lat = tile2bbox(x, y, z)
