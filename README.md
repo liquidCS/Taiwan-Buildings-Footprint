@@ -73,7 +73,7 @@ pip install -r requirements.txt
 python data.py [x] [y] [z]
 ```
 
-### OPTIONS
+#### OPTIONS
 ```
 usage: data.py [-h] x y z
 
