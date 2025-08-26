@@ -4,7 +4,7 @@
 
 #### CONTENTS 
 - [OSM Address and Building Analysis](#osm-address-and-building-analysis) 
-- [Tiles Generation](#tiles-generation)
+- [Binary Mask Tiles Generation](#binary-mask-tiles-generation)
 - [Building Segmentaiton](#building-segmentation)
 
 ## OSM Address and Building Analysis 
@@ -58,7 +58,9 @@ options:
 ```
 
 
-## Tiles Generation
+## Binary Mask Tiles Generation
+
+Generate binary map using OSM buildings data for training prosperous.
 
 #### FILES 
 - Code - `tiles/data.py`
@@ -75,12 +77,12 @@ options:
 ```
 cd tiles/
 pip install -r requirements.txt
-python data.py [x] [y] [z]
+python data.py [x] [y] [z] [county_id]
 ```
 
 #### OPTIONS
 ```
-usage: data.py [-h] x y z
+usage: data.py [-h] x y z county_id
 
 Generate binary map using OSM buildings data.
 
@@ -88,10 +90,47 @@ positional arguments:
   x           x - WMP horizontal tile index
   y           y - WMP vertical tile index
   z           z - WMP zoom level
+  county_id   ID of the county
+
+options:
+  -h, --help  show this help message and exit
 ```
+County ID is needed due to pyrosm performance issue.
 
 ## Building Segmentation
 
+#### DEPENDENCY
+Segment Anything Model (Meta)
+    - [Direct Download Link](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)
+Python Library: 
+    - segment_anything, opencv
+    - matplotlib, numpy 
+
+#### RUN
+
+> [!NOTE]
+> Must download Segment-Anything model form meta before running.
+
+```
+cd segmentation/
+pip install -r requirements.txt
+python predict_all.py x y z
+```
+
+#### OPTIONS
+```
+usage: predict_all.py [-h] x y z
+
+Generate building boundaries prediction using satellite tiles.
+
+positional arguments:
+  x           x - WMP horizontal tile index
+  y           y - WMP vertical tile index
+  z           z - WMP zoom level
+
+options:
+  -h, --help  show this help message and exit
+```
 
 
 
