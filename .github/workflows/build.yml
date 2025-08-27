@@ -28,12 +28,6 @@ jobs:
         run: |
           identify -list resource
 
-      - name: Compress .png images
-        run: for f in out/img/*.png ; do pngcrush -ow "$f"; done
-
-      - name: Convert .png to .webp
-        run: for f in out/img/*.png ; do convert "$f"  "${f%.*}.webp" ; done
-
       - name: Install Jupyter Book
         run: |
           python -m pip install --upgrade pip

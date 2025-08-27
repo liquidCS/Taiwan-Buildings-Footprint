@@ -6,7 +6,18 @@ root: intro
 parts:
 - caption: Buildings & Addresses
   chapters:
-    - file: footprint-northen
-    - file: footprint-central
-    - file: footprint-southern
-    - file: footprint-eastern
+  - file: footprint/footprint-intro
+  - file: footprint/footprint-northern
+  - file: footprint/footprint-central
+  - file: footprint/footprint-southern
+  - file: footprint/footprint-eastern
+  - file: footprint/footprint-rawData
+  - file: footprint/footprint-analysis
+
+- caption: Binary Mask Map Tiles
+  chapters:
+  - file: tiles/tiles-intro
+
+- caption: Building Segmentation
+  chapters: 
+  - file: segmentation/segmentation-intro.md

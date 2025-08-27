@@ -4,7 +4,7 @@
 title: Taiwan Building Footprints 
 author: LiquidCS 
 logo: logo.webp
-copyright: "2025"
+copyright: "2025 / OSM Data 2025.7"
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
