@@ -102,6 +102,7 @@ County ID is needed due to pyrosm performance issue.
 #### DEPENDENCY
 Segment Anything Model (Meta)
     - [Direct Download Link](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)
+
 Python Library: 
     - segment_anything, opencv
     - matplotlib, numpy 
